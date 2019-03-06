@@ -1,17 +1,15 @@
-import { ObjectModel } from 'objectmodel';
+import { ObjectModel, FunctionModel } from 'objectmodel';
 import Uuid from '../types/Uuid';
 
-let columns = {
+const AuthUser = new ObjectModel({
     userId: Uuid,
     clientId: Uuid,
+    token: [String],
     lastName: String,
     firstName: String,
-}
-
-class AuthUser extends ObjectModel(columns) {
-    get fullName() {
-        return `${this.firstName} ${this.lastName}`;
-    }
-}
+});
+AuthUser.prototype.getFullName = FunctionModel(AuthUser).return(String)(
+    function(authUser) { return authUser.firstName + " " + authUser.lastName; }
+);
 
 export default AuthUser;

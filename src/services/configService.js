@@ -29,12 +29,9 @@ class ConfigService {
     constructor() {
         // @todo: perhaps list configurations on startup?
     }
-    get SECRET() {
-        return _getConfigValue('FW_SECRET');
-    }
-    get DB_URL() {
-        return _getConfigValue('FW_DB_URL');
-    }
+    get SECRET() { return _getConfigValue('FW_SECRET'); }
+    get DB_URL() { return _getConfigValue('FW_DB_URL'); }
+    get JWT_EXPIRATION() { return _getConfigValue('FW_JWT_EXPIRATION'); }
 }
 
 export default new ConfigService();

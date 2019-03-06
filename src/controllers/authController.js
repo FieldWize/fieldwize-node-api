@@ -1,3 +1,5 @@
+import { authService } from '../services';
+
 export default {
     /**
      * loginHandler
@@ -6,12 +8,14 @@ export default {
      * @url: /auth
      */
     loginHandler: (request, response) => {
-        response.json({
-            secret: configService.SECRET,
-            dbUrl: configService.DB_URL,
-            body: request.body,
-            message: "[POST] /auth",
-        });
+        authService.authenticateUser(request.body)
+            .then(authUser => {
+                if (authUser) response.json(authUser);
+                else throw new Error("Login attempt failed");
+            })
+            .catch((err) => {
+                response.status(404).json({'error': err.message});
+            });
     },
 
     /**

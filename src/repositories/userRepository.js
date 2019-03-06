@@ -11,7 +11,13 @@ export default {
             })
             .catch(reject);
     }),
-    getUserByUsername: (username) => (
+    getUserByUsername: (username) => new Promise((resolve, reject) => {
         DB.query('SELECT * FROM users WHERE username = $1', [username])
-    ),
+            .then(({ rows, rowCount }, err) => {
+                if (err) console.error(err);
+                if (rowCount) resolve(objectUtils.camelKeys(rows[0]));
+                else resolve(null)
+            })
+            .catch(reject);
+    }),
 };
