@@ -1,21 +1,10 @@
 import express from 'express';
 import configService from '../services/configService';
+import authController from '../controllers/authController';
 
 const authRouter = express.Router();
 
-authRouter.route('/')
-    .get((request, response) => {
-        response.json({
-            message: "[GET] /auth",
-        });
-    })
-    .post((request, response) => {
-        response.json({
-            secret: configService.SECRET,
-            dbUrl: configService.DB_URL,
-            body: request.body,
-            message: "[POST] /auth",
-        });
-    });
+authRouter.post('/', authController.loginHandler);
+authRouter.get('/', authController.tokenLoginHandler);
 
 export default authRouter;
