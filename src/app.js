@@ -1,9 +1,13 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import dotenv from 'dotenv';
 import {
     authRouter,
     userRouter,
 } from './routers';
+
+// load .env vars
+dotenv.load();
 
 // app version constants
 const apiVersion = "1.0.0";
