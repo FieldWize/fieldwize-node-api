@@ -24,7 +24,7 @@ app.get('/', (request, response) => {
     response.json({
         version: apiVersion,
         lastUpdated: new Date("2019-01-01T08:12:01.123Z"),
-    })
+    });
 });
 // supply sub-routers to their respective domains
 app.use('/auth', authRouter);

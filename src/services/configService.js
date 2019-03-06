@@ -3,6 +3,7 @@ import _ from 'lodash';
 // accepted configurations with default values
 const _configDefaults = {
     FW_SECRET: "F!3ldW1z3",
+    FW_JWT_EXPIRATION: 60 * 60 * 24, // expires in 24 hours
     FW_DB_URL: "postgres://localhost:password@localhost/localhost?sslmode=disable",
 }
 

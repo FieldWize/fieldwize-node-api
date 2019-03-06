@@ -1,8 +1,10 @@
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import configService from './configService';
 
 /**
  * AuthService
- * Provides services for authentication and authorization of users
+ * Provides services for authentication and authorization of users.
  */
 class AuthService {
     /**
@@ -52,17 +54,30 @@ class AuthService {
      * timestamp provided.
      */
     createJWT({userId, clientId, timestamp}) {
-        // @todo, return token
+        if (!userId || !clientId || !timestamp) {
+            console.err(new Error("Invalid claim payload for JWT"));
+            return null;
+        }
+        return jwt.sign({userId, clientId, timestamp}, configService.SECRET, {
+            expiresIn: configService.JWT_EXPIRATION,
+        });
     }
 
     /**
-     * parseJWT
-     * Attempts to parse the json web token (jwt). If successful, will create
+     * verifyJWT
+     * Attempts to verify the json web token (jwt). If successful, will create
      * and return an AuthUser object, or will return null otherwise.
      */
-    parseJWT(token) {
-        // @todo, parse token and return AuthUser object
+    verifyJWT(token) {
+        try {
+            let claims = jwt.verify(token, config.secret);
+            // @todo: need to build AuthUser from claim
+            return claims;
+        } catch (err) {
+            console.error(err);
+        }
+        return null;
     }
 }
 
-export default authService;
+export default new AuthService();
