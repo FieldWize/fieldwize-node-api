@@ -26,7 +26,7 @@ let _getConfigValue = (key) => {
  */
 class ConfigService {
     constructor() {
-        console.log(process.env);
+        // @todo: perhaps list configurations on startup?
     }
     get SECRET() {
         return _getConfigValue('FW_SECRET');
