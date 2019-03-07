@@ -21,7 +21,7 @@ class AuthService {
             let authUser;
             userRepository.getUserByUsername(username)
                 .then(user => {
-                    if (!user) throw new Error("Username is invalid");
+                    if (!user) throw new Error("User could not be found");
                     authUser = new AuthUser(user);
                     return bcrypt.compare(password, user.password);
                 })
@@ -32,6 +32,21 @@ class AuthService {
                     } else {
                         reject(new Error("Password is invalid"))
                     }
+                })
+                .catch(reject);
+        });
+    }
+
+    authenticateToken(token) {
+        return new Promise((resolve, reject) => {
+            let claims = this.verifyJWT(token);
+            if (!claims) {
+                return reject("Token is invalid");
+            }
+            userRepository.getUserById(claims.userId)
+                .then(user => {
+                    if (user) return resolve(new AuthUser({token, ...user}));
+                    throw new Error("User could not be found.");
                 })
                 .catch(reject);
         });
@@ -60,7 +75,6 @@ class AuthService {
             console.err(new Error("Invalid claim payload for JWT"));
             return null;
         }
-        console.log(configService.JWT_EXPIRATION);
         return jwt.sign({userId, clientId, timestamp}, configService.SECRET, {
             expiresIn: configService.JWT_EXPIRATION,
         });
@@ -72,14 +86,7 @@ class AuthService {
      * and return an AuthUser object, or will return null otherwise.
      */
     verifyJWT(token) {
-        try {
-            let claims = jwt.verify(token, config.secret);
-            // @todo: need to build AuthUser from claim
-            return claims;
-        } catch (err) {
-            console.error(err);
-        }
-        return null;
+        return jwt.verify(token, configService.SECRET);
     }
 }
 
