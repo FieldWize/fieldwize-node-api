@@ -37,21 +37,6 @@ class AuthService {
         });
     }
 
-    authenticateToken(token) {
-        return new Promise((resolve, reject) => {
-            let claims = this.verifyJWT(token);
-            if (!claims) {
-                return reject("Token is invalid");
-            }
-            userRepository.getUserById(claims.userId)
-                .then(user => {
-                    if (user) return resolve(new AuthUser({token, ...user}));
-                    throw new Error("User could not be found.");
-                })
-                .catch(reject);
-        });
-    }
-
     /**
      * getPasswordHash
      * Returns a hash string based on the provided password text.

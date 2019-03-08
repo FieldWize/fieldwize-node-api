@@ -1,4 +1,5 @@
 import { authService } from '../services';
+import jwtMiddleware from '../middleware/jwtMiddleware';
 
 export default {
     /**
@@ -25,14 +26,9 @@ export default {
      * @url: /auth
      */
     tokenLoginHandler: (request, response) => {
-        let token = request.headers['authorization'] || "";
-        authService.authenticateToken(token.replace(/^bearer\s+/i, ""))
-            .then(authUser => {
-                if (authUser) response.json(authUser);
-                else throw new Error("Token authentication failed");
-            })
-            .catch(err => {
-                response.status(404).json({'error': err.message});
-            });
+        // just call the middleware directly
+        jwtMiddleware(request, response, () => {
+            response.json(request.authUser);
+        });
     },
 }

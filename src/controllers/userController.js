@@ -9,11 +9,12 @@ export default {
     getUser: (request, response) => {
         userRepository.getUserById(request.params.userId)
             .then((user) => {
-                response.json(user);
+                if (user) response.json(user);
+                else response.status(404).json({error: 'User could not be found'});
             })
             .catch(err => {
-                console.log(err);
-                response.status(404).json({error: 'User could not be found'})
+                console.error(err);
+                response.status(500).end();
             });
     },
     /**
@@ -21,9 +22,21 @@ export default {
      * Returns paginated list of users
      */
     searchUsers: (request, response) => {
-        response.json({
-            message: "[GET] /users",
-        })
+        let limit = request.query.limit || 10,
+            offset = request.query.offset || 0,
+            q = request.query.q || "{}";
+
+        userRepository.searchUsers(limit, offset, JSON.parse(q))
+            .then(resultSet => {
+                response.json({
+                    total: resultSet.total,
+                    results: resultSet.results.map(u => ({...u}))
+                });
+            })
+            .catch(err => {
+                console.error(err);
+                response.status(500).end();
+            });
     },
     /**
      * [POST] /users
