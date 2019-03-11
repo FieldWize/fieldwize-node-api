@@ -14,11 +14,12 @@ process.on('exit', (code) => {
 })
 
 // acts as a facade to db pool instance.
+// @flow
 class DB {
     connect() {
         return _pool.connect();
     }
-    query(q, args) {
+    query(q:string, args:mixed[]) {
         return _pool.query(q, args);
     }
     get stats() {

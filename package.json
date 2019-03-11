@@ -4,11 +4,14 @@
   "description": "Rest API built with Node",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon --exec babel-node src/app.js",
+    "build": "babel src --out-dir dist",
+    "serve": "node dist/app.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "babel-cli": "^6.26.0",
     "bcrypt": "^3.0.4",
     "body-parser": "^1.18.3",
     "dotenv": "^6.2.0",
@@ -16,11 +19,16 @@
     "jsonwebtoken": "^8.5.0",
     "lodash": "^4.17.11",
     "objectmodel": "^3.7.7",
+    "path": "^0.12.7",
     "pg": "^7.8.1"
   },
   "devDependencies": {
+    "@babel/cli": "^7.2.3",
     "@babel/core": "^7.3.4",
+    "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.3.4",
-    "@babel/register": "^7.0.0"
+    "@babel/preset-flow": "^7.0.0",
+    "concurrent": "^0.3.2",
+    "nodemon": "^1.18.10"
   }
 }
