@@ -1,0 +1,58 @@
+[
+    {
+        "platform": "api",
+        "domain": "auth",
+        "action": "login",
+        "summary": "Dispatch access",
+        "description": "Grants the ability to access the dispatch platform."
+    },
+    {
+        "platform": "dispatch",
+        "domain": "auth",
+        "action": "login",
+        "summary": "Dispatch access",
+        "description": "Grants the ability to access the dispatch platform."
+    },
+    {
+        "platform": "customer",
+        "domain": "auth",
+        "action": "login",
+        "summary": "Dispatch access",
+        "description": "Grants the ability to access the dispatch platform."
+    },
+    {
+        "platform": "mobile",
+        "domain": "auth",
+        "action": "login",
+        "summary": "Dispatch access",
+        "description": "Grants the ability to access the dispatch platform."
+    },
+    {
+        "platform": "api",
+        "domain": "users",
+        "action": "create",
+        "summary": "Create new users",
+        "description": "Grants the ability to create new users."
+    },
+    {
+        "platform": "api",
+        "domain": "users",
+        "action": "read",
+        "summary": "View user info",
+        "description": "Grants the ability to view user information."
+    },
+    {
+        "platform": "api",
+        "domain": "users",
+        "action": "update",
+        "summary": "Modify user info",
+        "description": "Grants the ability to modify user information."
+    },
+    {
+        "platform": "api",
+        "domain": "users",
+        "action": "delete",
+        "summary": "Delete users",
+        "description": "Grants the ability to delete users."
+    }
+]
